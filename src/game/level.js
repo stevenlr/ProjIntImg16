@@ -27,11 +27,11 @@ game
 		},
 
 		addEnnemy: function(ennemy) {
-			this.addEntity(enemy, BODY_TYPE.ENNEMY, [BODY_TYPE.BULLET_FRIEND]);
+			this.addEntity(ennemy, BODY_TYPE.ENNEMY, [BODY_TYPE.BULLET_FRIEND]);
 		},
 
 		addBullet: function(bullet, friendly) {
-			this.addEntity(enemy,
+			this.addEntity(bullet,
 				friendly ? BODY_TYPE.BULLET_FRIEND : BODY_TYPE.BULLET_ENNEMY,
 				friendly ? [BODY_TYPE.ENNEMY] : [BODY_TYPE.PLAYER]
 			);
@@ -56,6 +56,7 @@ game
 			body.entity = entity;
 			body.addShape(shape);
 			this.world.addBody(body);
+			game.scene.addObject(entity);
 			entity.body = body;
 
 			if (entity.collide !== undefined) {
@@ -65,6 +66,7 @@ game
 
 		removeEntity: function(entity) {
 			this.world.removeBody(entity.body);
+			game.scene.removeObject(entity);
 		},
 
 		keydown: function(e) {
@@ -73,6 +75,17 @@ game
 
 		keyup: function(e) {   
 			this.player.keyup(e);
+		},
+
+		doBombExplosion: function() {
+			for (var id in game.scene.objects) {
+				var obj = game.scene.objects[id];
+
+				if (obj.body !== undefined && obj.body.collisionGroup == BODY_TYPE.PICKUP) {
+					this.removeEntity(obj);
+					(obj.sprite !== undefined) && obj.sprite.remove();
+				}
+			}
 		}
 	});
 });

@@ -96,11 +96,18 @@ game
 			this.keyboard.r = e == 'RIGHT' || this.keyboard.r;
 			this.keyboard.u = e == 'UP' || this.keyboard.u;
 			this.keyboard.d = e == 'DOWN' || this.keyboard.d;
+
+			if (e == 'W') {
+				if (this.bombs > 0) {
+					this.bombs--;
+					game.scene.level.doBombExplosion();
+				}
+			}
 		},
 
 		collide: function(body) {
 			if (body.collisionGroup == BODY_TYPE.PICKUP) {
-				if (body.entity.type == PICKUP_TYPE.BOMB) {
+				if (body.entity.type == PICKUP_TYPE.ENNEMY) {
 					this.bombs++;
 				}
 			}

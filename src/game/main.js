@@ -26,10 +26,8 @@ game
 			var player = new game.Player(100, 100);
 			this.level = new game.Level();
 
-			this.level.setPlayer(player);
-
 			this.addObject(this.level);
-			this.addObject(player);
+			this.level.setPlayer(player);
 
 			this.level.addPickup(new game.Pickup(300, 300, PICKUP_TYPE.BOMB));
 			this.level.addPickup(new game.Pickup(400, 300, PICKUP_TYPE.BOMB));
