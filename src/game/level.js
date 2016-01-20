@@ -110,8 +110,8 @@ game
 				var obj = game.scene.objects[id];
 
 				if (obj.body && obj.body.collisionGroup == BODY_TYPE.ENEMY) {
-					this.removeEntity(obj);
-					(obj.sprite !== undefined) && obj.sprite.remove();
+					(obj.explode !== undefined) && obj.explode();
+					(obj.remove !== undefined) && obj.remove();
 				}
 			}
 		}

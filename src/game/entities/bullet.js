@@ -15,8 +15,8 @@ game
 		init: function(x,y, angle, speed, friendly){
 			this.friendly = friendly;
 			this.sprite = new game.Sprite('graphics/Bullet01.png');
-			this.size.x = this.sprite.width;
-			this.size.y = this.sprite.height;
+			this.size.x = Math.max(this.sprite.width, this.sprite.height);
+			this.size.y = Math.max(this.sprite.width, this.sprite.height);
 
 			this.direction.x = Math.cos(angle);
 			this.direction.y = Math.sin(angle);
@@ -40,8 +40,8 @@ game
 		  	this.body.position.set(this.position.x, this.position.y);
 
 		  	if (this.position.y < -20 || this.position.x < -20 || this.position.x >= game.system.width + 20) {
-		  		//this.sprite.remove();
-				//game.scene.level.removeEntity(this);
+		  		this.sprite.remove();
+				game.scene.level.removeEntity(this);
 			}
 		}
 	});

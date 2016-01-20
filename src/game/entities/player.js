@@ -123,7 +123,7 @@ game
 
 		collide: function(body) {
 			if (body.collisionGroup == BODY_TYPE.PICKUP) {
-				if (body.entity.type == PICKUP_TYPE.ENNEMY) {
+				if (body.entity.type == PICKUP_TYPE.BOMB) {
 					this.bombs++;
 				}
 			}
