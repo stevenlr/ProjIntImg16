@@ -11,6 +11,8 @@ game
 	game.addAsset('graphics/Spaceship.png');
 	game.addAsset('graphics/lifebar_fg.png');
 	game.addAsset('graphics/lifebar_bg.png');
+	game.addAsset('graphics/Background02.png');
+	game.addAsset('graphics/Background01.png');
 
 	game.createScene('Main', {
 		level: null,
@@ -23,8 +25,8 @@ game
 		},
 
 		init: function() {
-			var player = new game.Player(100, 100);
 			this.level = new game.Level();
+			var player = new game.Player(100, 100);
 
 			this.addObject(this.level);
 			this.level.setPlayer(player);

@@ -12,13 +12,23 @@ game
 	game.createClass('Level', {
 		player: null,
 		world: null,
+		starsLayer1: null,
+		starsLayer2: null,
+		starsSpeed: 0.5,
 
 		init: function() {
 			this.world = new game.World(0, 0);
+			this.starsLayer1 = new game.TilingSprite('graphics/Background01.png', game.system.width, game.system.height);
+			this.starsLayer2 = new game.TilingSprite('graphics/Background02.png', game.system.width, game.system.height);
+
+			game.scene.stage.addChild(this.starsLayer1);
+			game.scene.stage.addChild(this.starsLayer2);
 		},
 
 		update: function() {
 			this.world.update();
+			this.starsLayer1.tilePosition.y += this.starsSpeed * 1;
+			this.starsLayer2.tilePosition.y += this.starsSpeed * 2;
 		},
 
 		setPlayer: function(player) {
@@ -81,7 +91,7 @@ game
 			for (var id in game.scene.objects) {
 				var obj = game.scene.objects[id];
 
-				if (obj.body !== undefined && obj.body.collisionGroup == BODY_TYPE.PICKUP) {
+				if (obj.body !== undefined && obj.body.collisionGroup == BODY_TYPE.ENNEMY) {
 					this.removeEntity(obj);
 					(obj.sprite !== undefined) && obj.sprite.remove();
 				}
