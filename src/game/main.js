@@ -10,6 +10,8 @@ game
 )
 .body(function() {
 	game.addAudio('audio/fx/laser.wav', 'laser');
+	game.addAudio('audio/music/Level01.wav', 'm1');
+	game.addAudio('audio/music/Level02.wav', 'm2');
 	game.addAudio('audio/fx/laser_enemy.wav', 'laserEnemy');
 
 	game.createScene('Main', {
@@ -30,6 +32,7 @@ game
 		hasBoss: false,
 
 		init: function() {
+			game.audio.playMusic('m1');
 			this.level = new game.Level();
 			this.addObject(this.level);
 
