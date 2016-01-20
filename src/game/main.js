@@ -1,16 +1,30 @@
-game.module(
-    'game.main'
+game
+.module('game.main')
+.require(
+	'game.level',
+	'game.entities.player'
 )
 .body(function() {
 
-game.addAsset('logo.png');
+	game.createScene('Main', {
+		level: null,
 
-game.createScene('Main', {
-    backgroundColor: 0xb9bec7,
+		init: function() {
+			var player = new game.Player(100, 100);
+			this.level = new game.Level();
 
-    init: function() {
-        var logo = new game.Sprite('logo.png').center().addTo(this.stage);
-    }
-});
+			this.level.setPlayer(player);
 
+			this.addObject(this.level);
+			this.addObject(player);
+		},
+
+		keydown: function(e) {
+			this.level.keydown(e);
+		},
+
+		keyup: function(e) {   
+			this.level.keyup(e);
+		}
+	});
 });
