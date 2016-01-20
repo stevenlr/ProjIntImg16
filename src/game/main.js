@@ -1,87 +1,77 @@
-game.module(
-    'game.main'
+game
+.module('game.main')
+.require(
+	'game.level',
+	'game.entities.player',
+	'game.entities.pickup'
 )
 .body(function() {
 
-game.addAsset('logo.png');
-game.addAsset('Bullet01.png');
+	game.addAsset('graphics/Bullet03.png');
+	game.addAsset('graphics/Spaceship.png');
+	game.addAsset('graphics/lifebar_fg.png');
+	game.addAsset('graphics/lifebar_bg.png');
+	game.addAsset('graphics/Background02.png');
+	game.addAsset('graphics/Background01.png');
 
-game.createClass('Bullet',{
+	game.createScene('Main', {
+		level: null,
 
-	position: {x: 0, y: 0},
-	direction: {x: 0, y: 0},
-	size: {x: 0, y: 0},
-        speed: 90,
-	sprite: null,
-	body: null,
-        
-	init: function(x,y, angle){
+		hud: {
+			bombIcon: null,
+			bombText: null,
+			lifeBg: null,
+			lifeFg: null
+		},
 
-            this.sprite = new game.Sprite('Bullet01.png');
-            this.size.x = this.sprite.width;
-            this.size.y = this.sprite.height;
+		init: function() {
+			this.level = new game.Level();
+			var player = new game.Player(100, 100);
 
-	    this.direction.x = Math.cos(angle);
-	    this.direction.y = Math.sin(angle);
+			this.addObject(this.level);
+			this.level.setPlayer(player);
 
-            this.position.x = x - this.size.x / 2;
-            this.position.y = y - this.size.y / 2;
-            this.sprite.rotation=Math.PI/2;
+			this.level.addPickup(new game.Pickup(300, 300, PICKUP_TYPE.BOMB));
+			this.level.addPickup(new game.Pickup(400, 300, PICKUP_TYPE.BOMB));
+			this.level.addPickup(new game.Pickup(450, 350, PICKUP_TYPE.BOMB));
 
-            this.sprite.position.set(this.position.x, this.position.y);
-            game.scene.stage.addChild(this.sprite);
+			this.hud.bombIcon = new game.Sprite('graphics/Bullet03.png');
+			this.hud.bombIcon.position.x = 40;
+			this.hud.bombIcon.position.y = game.system.height - 40;
 
-	},
+			this.hud.bombText = new game.Text('0', {'fill': 'white', 'font': '27px Arial'});
+			this.hud.bombText.position.x = 80;
+			this.hud.bombText.position.y = game.system.height - 40;
 
-       
-	
-        update: function(x,y) {
+			this.hud.lifeBg = new game.Sprite('graphics/lifebar_bg.png');
+			this.hud.lifeBg.center();
+			this.hud.lifeBg.position.y = game.system.height - 40;
 
-		
-	   this.sprite.position.set(this.position.x, this.position.y);
-	   this.position.x += this.direction.x * this.speed * game.system.delta;
-           this.position.y += this.direction.y * this.speed * game.system.delta;
-	  // this.body.position.x = this.position.x;
-	   //this.body.position.y=this.position.y;
-           
-        }
+			this.hud.lifeFg = new game.Sprite('graphics/lifebar_fg.png');
+			this.hud.lifeFg.center();
+			this.hud.lifeFg.position.y = game.system.height - 40;
 
+			for (var e in this.hud) {
+				if (this.hud[e] != null) {
+					this.stage.addChild(this.hud[e]);
+				}
+			}
+		},
 
+		update: function() {
+			this._super();
+			this.hud.bombText.setText(this.level.player.bombs);
+			this.hud.lifeFg.crop(0, 0, this.hud.lifeBg.width * this.level.player.life / this.level.player.maxLife, this.hud.lifeFg.height);
+		},
 
-       /* keyup: function(e){
-       //console.log(e);// aller voir ce qu'il se passe dans la console 
-            if( e == 'P'){
-		
+		keydown: function(e) {
+			this.level.keydown(e);
+		},
 
-	           this.position.y += 10;	
-		
-	    }
-        }*/
-
-});
-
-
-game.createScene('Main', {
-     
-    backgroundColor: 0xb9bec7,
-    e: null,
-    Bulet : null,
-
-	//Mettre une ',' entre chaque fonction
-
-    init: function() {
-        var logo = new game.Sprite('logo.png').center().addTo(this.stage); 
-    },
-    keyup: function(e){
-	    this.Bulet = new game.Bullet(100,500, -Math.PI/2);
-        this.addObject(this.Bulet);
-        this.Bulet = new game.Bullet(100,500, -Math.PI/3);
-        this.addObject(this.Bulet);
-        this.Bulet = new game.Bullet(100,500, -2*Math.PI/3);
-        this.addObject(this.Bulet);
-    }
- 
-});
+		keyup: function(e) {   
+			this.level.keyup(e);
+		}
+	});
 });
 
 
