@@ -3,6 +3,7 @@ game
 .require('game.entities.bubble')
 .body(function() {
 	game.addAsset('graphics/boss_steven.png');
+	game.addAsset('graphics/blep.png');
 
 	game.createClass('BossSteven', {
 		position: {x: 0, y: 0},
@@ -33,10 +34,12 @@ game
 		phase: null,
 			
 		init: function(x, y) {
-			this.sprite = new game.Sprite('graphics/boss_steven.png');
-			this.sprite.position.set(x, y);
+			this.spriteBoss = new game.Sprite('graphics/boss_steven.png');
+			this.spriteBlep = new game.Sprite('graphics/blep.png');
+			this.sprite = new game.Sprite('graphics/boss_steven.png')
+ 			this.sprite.position.set(x, y);
 			this.sprite.rotation = -0.2;
-			this.sprite.anchor.set(0.5, 1);
+			this.sprite.anchor.set(0.5, 0.5);
 			this.startY = y;
 			this.position.x = x;
 			this.position.y = y;
@@ -99,6 +102,7 @@ game
 			this.sprite.position.set(this.position.x, this.position.y);
 			switch (this.idPhase) {
 				case 1: case 3: case 5: case 7:
+					this.sprite.texture = this.spriteBlep.texture;
 					this.timeFireRate += game.system.delta;
 					if (this.timeFireRate >= this.fireRate) {
 						this.timeFireRate -= this.fireRate;
@@ -107,9 +111,11 @@ game
 					}
 					break;
 				case 0: case 2: case 4: case 6: case 8:
+					this.sprite.texture = this.spriteBoss.texture;
 					this.timeFireRate = 0;
 					break;
 				case 9:
+					this.sprite.texture = this.spriteBlep.texture;
 					this.timeFireRate += game.system.delta;
 					if (this.timeFireRate >= this.fireRateLong) {
 						this.timeFireRate -= this.fireRateLong;
@@ -122,7 +128,7 @@ game
 		},
 
 		shootBubble: function() {
-			var pos = {x: this.position.x, y: this.position.y - 60};
+			var pos = {x: this.position.x + 20, y: this.position.y + 75};
 			var dir = {x: 0, y: 1};
 			var bubble = new game.Bubble(pos, dir, 250);
 			game.scene.level.addBullet(bubble, false);
