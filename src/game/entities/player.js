@@ -123,9 +123,15 @@ game
 
 		collide: function(body) {
 			if (body.collisionGroup == BODY_TYPE.PICKUP) {
-				if (body.entity.type == PICKUP_TYPE.BOMB) {
-					this.bombs++;
-					body.entity.remove();
+				switch (body.entity.type) { 
+					case PICKUP_TYPE.BOMB:
+						this.bombs++;
+						body.entity.remove();
+						break;
+					case PICKUP_TYPE.LIFE:
+						this.life = Math.min(this.life + 1, this.maxLife);
+						body.entity.remove();
+						break;
 				}
 			}
 		}

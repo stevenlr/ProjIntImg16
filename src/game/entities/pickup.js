@@ -1,5 +1,6 @@
 var PICKUP_TYPE = {
-	BOMB: 0
+	BOMB: 0,
+	LIFE: 1
 };
 
 game
@@ -18,7 +19,10 @@ game
 			switch (type) {
 				case PICKUP_TYPE.BOMB:
 					this.sprite = new game.Sprite('graphics/Bullet03.png');
-				break;
+					break;
+				case PICKUP_TYPE.LIFE:
+					this.sprite = new game.Sprite('graphics/life.png');
+					break;
 			}
 
 			this.type = type;
