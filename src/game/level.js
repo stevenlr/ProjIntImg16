@@ -12,6 +12,10 @@ game
 
 		init: function() {
 			this.world = new game.World(0, 0);
+		},
+
+		setPlayer: function(player) {
+			this.player = player;
 			this.addEntity(player, this.ENTITY_PLAYER, [this.ENTITY_BULLET_ENNEMY]);
 		},
 
@@ -49,6 +53,14 @@ game
 
 		removeEntity: function(entity) {
 			this.world.removeBody(entity.body);
+		},
+
+		keydown: function(e) {
+			this.player.keydown(e);
+		},
+
+		keyup: function(e) {   
+			this.player.keyup(e);
 		}
 	});
 });
