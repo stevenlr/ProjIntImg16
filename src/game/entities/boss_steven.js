@@ -157,6 +157,7 @@ game
 		},
 
 		shootBubble: function() {
+			game.audio.playSound('laserEnemy');
 			var pos = {x: this.position.x + 20, y: this.position.y + 75};
 			var dir = {x: 0, y: 1};
 			var bubble = new game.Bubble(pos, dir, 250);

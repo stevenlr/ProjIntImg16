@@ -23,6 +23,7 @@ game
 		shoot: function() {
 			if (this.timerShoot >= this.timerShootMax) {
 				this.timerShoot = 0;
+				game.audio.playSound('laser');
 
 				var x = this.player.position.x, y = this.player.position.y - 40;
 

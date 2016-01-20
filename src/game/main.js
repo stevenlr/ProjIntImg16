@@ -9,6 +9,8 @@ game
 	'game.entities.boss_steven'
 )
 .body(function() {
+	game.addAudio('audio/fx/laser.wav', 'laser');
+	game.addAudio('audio/fx/laser_enemy.wav', 'laserEnemy');
 
 	game.createScene('Main', {
 		level: null,

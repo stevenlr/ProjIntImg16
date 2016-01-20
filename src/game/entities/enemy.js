@@ -172,6 +172,7 @@ game.module('game.entities.enemy')
 			}
 			
 			if (bullet) {
+				game.audio.playSound('laserEnemy');
 				game.scene.level.addBullet(bullet);
 			}
 		}
