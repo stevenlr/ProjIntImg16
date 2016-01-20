@@ -104,15 +104,18 @@ game
 				}
 			}
 
+			var doge = false;
+
 			if(this.touched)
 			{
 				this.timerBlinking += game.system.delta;
 				if(this.timerBlinking < this.timerBlinkingMax)
 				{
-					if(this.timerBlinking%0.1 < 0.05)
+					if(this.timerBlinking%0.1 < 0.05) {
 						this.sprite.tint = 0xFF0000;
-					else
+					} else {
 						this.sprite.tint = 0xFFFFFF;
+					}
 				}
 				else
 				{
@@ -126,6 +129,7 @@ game
 			switch (this.idPhase) {
 				case 1: case 3: case 5: case 7:
 					this.sprite.texture = this.spriteBlep.texture;
+					doge = true;
 					this.timeFireRate += game.system.delta;
 					if (this.timeFireRate >= this.fireRate) {
 						this.timeFireRate -= this.fireRate;
@@ -139,6 +143,7 @@ game
 					break;
 				case 9:
 					this.sprite.texture = this.spriteBlep.texture;
+					doge = true;
 					this.timeFireRate += game.system.delta;
 					if (this.timeFireRate >= this.fireRateLong) {
 						this.timeFireRate -= this.fireRateLong;
