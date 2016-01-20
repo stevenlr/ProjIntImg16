@@ -1,7 +1,7 @@
-game.module('game.entities.ennemy')
+game.module('game.entities.enemy')
 .body(function() {
 
-	game.createClass('Ennemy', {
+	game.createClass('Enemy', {
 		speed: 400,
 		body: null,
 		position: {x: 0, y: 0},

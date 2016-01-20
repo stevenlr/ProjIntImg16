@@ -4,7 +4,7 @@ game
 	'game.level',
 	'game.entities.player',
 	'game.entities.pickup',
-	'game.entities.ennemy',
+	'game.entities.enemy',
 	'game.assets'
 )
 .body(function() {
@@ -52,12 +52,12 @@ game
 				}
 			}
 			
-			this.addTimer(1000, this.spawnEnnemy.bind(this), true);
-			this.spawnEnnemy();
+			this.addTimer(1000, this.spawnEnemy.bind(this), true);
+			this.spawnEnemy();
 		},
 
-		spawnEnnemy: function() {
-			var enemy = new game.Ennemy().sprite.addTo(this.stage);
+		spawnEnemy: function() {
+			var enemy = new game.Enemy().sprite.addTo(this.stage);
 		},
 
 		update: function() {
