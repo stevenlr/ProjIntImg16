@@ -9,6 +9,8 @@ game
 	        acc: {x: 0, y: 0},
 	        size: {x: 0, y: 0},
 	        sprite: null,
+	        isDead: false,
+	        life: 3,
 	        keyboard: {l: false, r: false, u: false, d: false},
 	        ACCELERATION: 20,
 	        DIAG_ACCELERATION: Math.sqrt(2)/2,
@@ -22,6 +24,8 @@ game
             this.sprite.position.set(x, y);
             this.position.x = x;
             this.position.y = y;
+            this.size.x = this.sprite.width;
+            this.size.y = this.sprite.height;
         },
 
     update: function() {
@@ -59,6 +63,18 @@ game
 
             this.position.x = this.position.x + this.speed.x;
             this.position.y = this.position.y + this.speed.y;
+
+            var w = this.size.x * 0.5;
+            var h = this.size.y * 0.5;
+
+            if (this.position.x < w)
+            	this.position.x = w;
+            if (this.position.x >= game.system.width - w)
+            	this.position.x = game.system.width - w - 1;
+            if (this.position.y < h)
+            	this.position.y = h;
+            if (this.position.y >= game.system.height - h)
+            	this.position.y = game.system.height - h - 1;
 
             this.speed.x = this.speed.x * this.FRICTION;
             this.speed.y = this.speed.y * this.FRICTION;
