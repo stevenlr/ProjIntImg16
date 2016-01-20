@@ -3,7 +3,9 @@ game
 .require(
 	'game.level',
 	'game.entities.player',
-	'game.entities.pickup'
+	'game.entities.pickup',
+	'game.assets',
+	'game.enemies'
 )
 .body(function() {
 
@@ -56,6 +58,13 @@ game
 					this.stage.addChild(this.hud[e]);
 				}
 			}
+			
+			this.addTimer(1000, this.spawnEnemy.bind(this), true);
+			this.spawnEnemy();
+		},
+
+		spawnEnemy: function() {
+			var enemy = new game.Enemy().sprite.addTo(this.stage);
 		},
 
 		update: function() {
