@@ -4,17 +4,10 @@ game
 	'game.level',
 	'game.entities.player',
 	'game.entities.pickup',
-	'game.assets',
-	'game.enemies'
+	'game.entities.ennemy',
+	'game.assets'
 )
 .body(function() {
-
-	game.addAsset('graphics/Bullet03.png');
-	game.addAsset('graphics/Spaceship.png');
-	game.addAsset('graphics/lifebar_fg.png');
-	game.addAsset('graphics/lifebar_bg.png');
-	game.addAsset('graphics/Background02.png');
-	game.addAsset('graphics/Background01.png');
 
 	game.createScene('Main', {
 		level: null,
@@ -59,12 +52,12 @@ game
 				}
 			}
 			
-			this.addTimer(1000, this.spawnEnemy.bind(this), true);
-			this.spawnEnemy();
+			this.addTimer(1000, this.spawnEnnemy.bind(this), true);
+			this.spawnEnnemy();
 		},
 
-		spawnEnemy: function() {
-			var enemy = new game.Enemy().sprite.addTo(this.stage);
+		spawnEnnemy: function() {
+			var enemy = new game.Ennemy().sprite.addTo(this.stage);
 		},
 
 		update: function() {
