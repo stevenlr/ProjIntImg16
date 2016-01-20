@@ -1,15 +1,17 @@
+var BODY_TYPE = {
+	PLAYER: 0,
+	ENNEMY: 1,
+	BULLET_FRIEND: 2,
+	BULLET_ENNEMY: 3,
+	PICKUP: 4
+};
+
 game
 .module('game.level')
 .body(function() {
 	game.createClass('Level', {
 		player: null,
 		world: null,
-
-		ENTITY_PLAYER: 0,
-		ENTITY_ENNEMY: 1,
-		ENTITY_BULLET_FRIEND: 2,
-		ENTITY_BULLET_ENNEMY: 3,
-		ENTITY_PICKUP: 4,
 
 		init: function() {
 			this.world = new game.World(0, 0);
@@ -21,22 +23,22 @@ game
 
 		setPlayer: function(player) {
 			this.player = player;
-			this.addEntity(player, this.ENTITY_PLAYER, [this.ENTITY_BULLET_ENNEMY, this.ENTITY_PICKUP]);
+			this.addEntity(player, BODY_TYPE.PLAYER, [BODY_TYPE.BULLET_ENNEMY, BODY_TYPE.PICKUP]);
 		},
 
 		addEnnemy: function(ennemy) {
-			this.addEntity(enemy, this.ENTITY_ENNEMY, [this.ENTITY_BULLET_FRIEND]);
+			this.addEntity(enemy, BODY_TYPE.ENNEMY, [BODY_TYPE.BULLET_FRIEND]);
 		},
 
 		addBullet: function(bullet, friendly) {
 			this.addEntity(enemy,
-				friendly ? this.ENTITY_BULLET_FRIEND : this.ENTITY_BULLET_ENNEMY,
-				friendly ? [this.ENTITY_ENNEMY] : [this.ENTITY_PLAYER]
+				friendly ? BODY_TYPE.BULLET_FRIEND : BODY_TYPE.BULLET_ENNEMY,
+				friendly ? [BODY_TYPE.ENNEMY] : [BODY_TYPE.PLAYER]
 			);
 		},
 
 		addPickup: function(pickup) {
-			this.addEntity(pickup, this.ENTITY_PICKUP, [this.ENTITY_PLAYER]);
+			this.addEntity(pickup, BODY_TYPE.PICKUP, [BODY_TYPE.PLAYER]);
 		},
 
 		addEntity: function(entity, type, against) {
