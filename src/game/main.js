@@ -5,12 +5,14 @@ game
 	'game.entities.player',
 	'game.entities.pickup',
 	'game.entities.enemy',
-	'game.assets'
+	'game.assets',
+	'game.entities.boss_steven'
 )
 .body(function() {
 
 	game.createScene('Main', {
 		level: null,
+		boss_steven: null,
 
 		hud: {
 			bombIcon: null,
@@ -22,9 +24,12 @@ game
 		init: function() {
 			this.level = new game.Level();
 			var player = new game.Player(100, 100);
+			var boss_steven = new game.BossSteven(75, 300);
 
 			this.addObject(this.level);
 			this.level.setPlayer(player);
+			this.level.addEnemy(boss_steven);
+			this.boss_steven = boss_steven;
 
 			this.hud.bombIcon = new game.Sprite('graphics/Bullet03.png');
 			this.hud.bombIcon.position.x = 40;
@@ -47,13 +52,6 @@ game
 					this.stage.addChild(this.hud[e]);
 				}
 			}
-
-			this.addTimer(1000, this.spawnEnemy.bind(this), true);
-			this.spawnEnemy();
-		},
-
-		spawnEnemy: function() {
-			this.level.addEnemy(new game.Enemy(0));
 		},
 
 		update: function() {

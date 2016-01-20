@@ -33,6 +33,9 @@ game
 			this.sprite.anchor.set(0.5, 0.5);
 			this.weapon = new game.Weapon(this);
 
+			this.size.x *= 0.35;
+			this.size.y *= 0.7;
+
 			game.scene.stage.addChild(this.sprite);
 		},
 
@@ -80,14 +83,17 @@ game
 			this.position.x = this.position.x + this.speed.x;
 			this.position.y = this.position.y + this.speed.y;
 
-			if (this.position.x < 0)
-				this.position.x = 0;
-			if (this.position.x + this.size.x >= game.system.width)
-				this.position.x = game.system.width - this.size.x - 1;
-			if (this.position.y < 0)
-				this.position.y = 0;
-			if (this.position.y + this.size.y >= game.system.height)
-				this.position.y = game.system.height - this.size.y - 1;
+			var w = this.size.x / 2;
+			var h = this.size.y / 2;
+
+			if (this.position.x < w)
+				this.position.x = w;
+			if (this.position.x >= game.system.width - w)
+				this.position.x = game.system.width - w - 1;
+			if (this.position.y < h)
+				this.position.y = h;
+			if (this.position.y >= game.system.height - h)
+				this.position.y = game.system.height - h - 1;
 
 			this.speed.x = this.speed.x * this.FRICTION;
 			this.speed.y = this.speed.y * this.FRICTION;
@@ -123,9 +129,19 @@ game
 
 		collide: function(body) {
 			if (body.collisionGroup == BODY_TYPE.PICKUP) {
-				if (body.entity.type == PICKUP_TYPE.BOMB) {
-					this.bombs++;
-					body.entity.remove();
+				switch (body.entity.type) { 
+					case PICKUP_TYPE.BOMB:
+						this.bombs++;
+						body.entity.remove();
+						break;
+					case PICKUP_TYPE.LIFE:
+						this.life = Math.min(this.life + 1, this.maxLife);
+						body.entity.remove();
+						break;
+					case PICKUP_TYPE.UPGRADE:
+						this.weapon.levelUp();
+						body.entity.remove();
+						break;
 				}
 			}
 		}

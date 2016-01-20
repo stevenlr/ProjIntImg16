@@ -23,6 +23,12 @@ game
 
 			game.scene.stage.addChild(this.starsLayer1);
 			game.scene.stage.addChild(this.starsLayer2);
+
+			game.scene.addTimer(1000, this.spawnEnemy.bind(this), true);
+		},
+
+		spawnEnemy: function() {
+			game.scene.level.addEnemy(new game.Enemy(Math.floor(Math.random() * 3)));
 		},
 
 		update: function() {
@@ -109,7 +115,7 @@ game
 			for (var id in game.scene.objects) {
 				var obj = game.scene.objects[id];
 
-				if (obj.body && obj.body.collisionGroup == BODY_TYPE.ENEMY) {
+				if (obj.body && obj.body.collisionGroup == BODY_TYPE.ENEMY && ! obj.isBoss) {
 					(obj.explode !== undefined) && obj.explode();
 					(obj.remove !== undefined) && obj.remove();
 				}

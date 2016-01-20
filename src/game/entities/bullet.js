@@ -10,7 +10,7 @@ game
 		body: null,
 		friendly: false,
 
-		init: function(x,y, angle, speed, friendly){
+		init: function(x, y, angle, speed, friendly){
 			this.friendly = friendly;
 			if(friendly)
 				this.sprite = new game.Sprite('graphics/Bullet01.png');
@@ -25,18 +25,19 @@ game
 
 			this.position.x = x;
 			this.position.y = y;
-			this.sprite.anchor.set(0.5, 0.5);
+			
 			this.sprite.rotation = Math.PI/2;
+			this.sprite.anchor.set(0.5, 0.5);
 
 			this.sprite.position.set(this.position.x, this.position.y);
 			game.scene.stage.addChild(this.sprite);
 		},
 		
 		update: function(x,y) {
-			this.sprite.position.set(this.position.x, this.position.y);
 			this.position.x += this.direction.x * this.speed;
 			this.position.y += this.direction.y * this.speed;
 		  	this.body.position.set(this.position.x, this.position.y);
+		  	this.sprite.position.set(this.position.x, this.position.y);
 
 		  	if (this.position.y < -20 || this.position.x < -20 || this.position.x >= game.system.width + 20) {
 				this.remove();
