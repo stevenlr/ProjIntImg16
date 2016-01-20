@@ -1,6 +1,7 @@
 var PICKUP_TYPE = {
 	BOMB: 0,
-	LIFE: 1
+	LIFE: 1,
+	UPGRADE: 2
 };
 
 game
@@ -22,6 +23,9 @@ game
 					break;
 				case PICKUP_TYPE.LIFE:
 					this.sprite = new game.Sprite('graphics/life.png');
+					break;
+				case PICKUP_TYPE.UPGRADE:
+					this.sprite = new game.Sprite('graphics/upgrade.png');
 					break;
 			}
 

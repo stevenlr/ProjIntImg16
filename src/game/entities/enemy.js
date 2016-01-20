@@ -110,6 +110,8 @@ game.module('game.entities.enemy')
 				game.scene.level.addPickup(new game.Pickup(this.position.x, this.position.y, PICKUP_TYPE.BOMB));
 			} else if (Math.random() < 0.1) {
 				game.scene.level.addPickup(new game.Pickup(this.position.x, this.position.y, PICKUP_TYPE.LIFE));
+			} else if (Math.random() < 0.1) {
+				game.scene.level.addPickup(new game.Pickup(this.position.x, this.position.y, PICKUP_TYPE.UPGRADE));
 			}
 		}
 	});

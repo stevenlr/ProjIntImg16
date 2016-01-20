@@ -12,4 +12,5 @@ game.module('game.assets')
 	game.addAsset('graphics/life.png');
 	game.addAsset('graphics/Enemy01.png');
 	game.addAsset('graphics/Enemy03.png');
+	game.addAsset('graphics/upgrade.png');
 });

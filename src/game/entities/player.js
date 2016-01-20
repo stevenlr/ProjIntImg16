@@ -135,6 +135,10 @@ game
 						this.life = Math.min(this.life + 1, this.maxLife);
 						body.entity.remove();
 						break;
+					case PICKUP_TYPE.UPGRADE:
+						this.weapon.levelUp();
+						body.entity.remove();
+						break;
 				}
 			}
 		}
