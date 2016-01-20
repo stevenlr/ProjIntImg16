@@ -28,6 +28,10 @@ game
 		timeFireRate: 0.5,
 		fireRateLong: 0.2,
 
+		timerBlinking: 0,
+		timerBlinkingMax: 0.5,
+		touched: false,
+
 		timePauseShoot: 1000,
 		timeFireRateLong: 3000,
 		timeShootingPhase: 500,
@@ -100,11 +104,32 @@ game
 				}
 			}
 
+			var doge = false;
+
+			if(this.touched)
+			{
+				this.timerBlinking += game.system.delta;
+				if(this.timerBlinking < this.timerBlinkingMax)
+				{
+					if(this.timerBlinking%0.1 < 0.05) {
+						this.sprite.tint = 0xFF0000;
+					} else {
+						this.sprite.tint = 0xFFFFFF;
+					}
+				}
+				else
+				{
+					this.touched = false;
+					this.sprite.tint = 0xFFFFFF;
+				}
+			}
+
 			this.sprite.position.set(this.position.x, this.position.y);
 			this.body.position.set(this.position.x, this.position.y);
 			switch (this.idPhase) {
 				case 1: case 3: case 5: case 7:
 					this.sprite.texture = this.spriteBlep.texture;
+					doge = true;
 					this.timeFireRate += game.system.delta;
 					if (this.timeFireRate >= this.fireRate) {
 						this.timeFireRate -= this.fireRate;
@@ -118,6 +143,7 @@ game
 					break;
 				case 9:
 					this.sprite.texture = this.spriteBlep.texture;
+					doge = true;
 					this.timeFireRate += game.system.delta;
 					if (this.timeFireRate >= this.fireRateLong) {
 						this.timeFireRate -= this.fireRateLong;
@@ -150,6 +176,8 @@ game
 
 		hurt: function() {
 			this.life--;
+			this.touched = true;
+			this.timerBlinking = 0;
 
 			if (this.life == 0) {
 				this.remove();

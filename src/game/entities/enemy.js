@@ -12,6 +12,9 @@ game.module('game.entities.enemy')
 		timer: 0,
 		timerShoot: 0,
 		timerShootMax: 2,
+		timerBlinking: 0,
+		timerBlinkingMax: 0.5,
+		touched: false,
 		life: 1,
 
 		init: function(type) {
@@ -84,6 +87,23 @@ game.module('game.entities.enemy')
 				this.timerShoot = 0;
 				this.shoot();
 			}
+
+			if(this.touched)
+			{
+				this.timerBlinking += game.system.delta;
+				if(this.timerBlinking < this.timerBlinkingMax)
+				{
+					if(this.timerBlinking%0.1 < 0.05)
+						this.sprite.tint = 0xFF0000;
+					else
+						this.sprite.tint = 0xFFFFFF;
+				}
+				else
+				{
+					this.touched = false;
+					this.sprite.tint = 0xFFFFFF;
+				}
+			}
 				
 		},
 
@@ -92,6 +112,8 @@ game.module('game.entities.enemy')
 			{
 				body.entity.remove();
 				this.life--;
+				this.touched = true;
+				this.timerBlinking = 0;
 			}
 
 			if(this.life == 0)
