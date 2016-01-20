@@ -28,6 +28,10 @@ game
 		timeFireRate: 0.5,
 		fireRateLong: 0.15,
 
+		timerBlinking: 0,
+		timerBlinkingMax: 0.5,
+		touched: false,
+
 		timePauseShoot: 1000,
 		timeFireRateLong: 3000,
 		timeShootingPhase: 500,
@@ -100,6 +104,23 @@ game
 				}
 			}
 
+			if(this.touched)
+			{
+				this.timerBlinking += game.system.delta;
+				if(this.timerBlinking < this.timerBlinkingMax)
+				{
+					if(this.timerBlinking%0.1 < 0.05)
+						this.sprite.tint = 0xFF0000;
+					else
+						this.sprite.tint = 0xFFFFFF;
+				}
+				else
+				{
+					this.touched = false;
+					this.sprite.tint = 0xFFFFFF;
+				}
+			}
+
 			this.sprite.position.set(this.position.x, this.position.y);
 			this.body.position.set(this.position.x, this.position.y);
 			switch (this.idPhase) {
@@ -150,6 +171,8 @@ game
 
 		hurt: function() {
 			this.life--;
+			this.touched = true;
+			this.timerBlinking = 0;
 
 			if (this.life == 0) {
 				this.remove();
