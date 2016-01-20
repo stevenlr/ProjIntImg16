@@ -125,12 +125,12 @@ game.module('game.entities.enemy')
 			emitter.speed = 0;
 			game.scene.addEmitter(emitter);
 
-			if (Math.random() <= 0.05) {
+			if (Math.random() <= 0.1) {
 				game.scene.level.addPickup(new game.Pickup(this.position.x, this.position.y, PICKUP_TYPE.BOMB));
-			} else if (Math.random() < 0.1) {
-				game.scene.level.addPickup(new game.Pickup(this.position.x, this.position.y, PICKUP_TYPE.LIFE));
-			} else if (Math.random() < 0.1) {
+			} else if (Math.random() < 0.15) {
 				game.scene.level.addPickup(new game.Pickup(this.position.x, this.position.y, PICKUP_TYPE.UPGRADE));
+			} else if (Math.random() < 0.22) {
+				game.scene.level.addPickup(new game.Pickup(this.position.x, this.position.y, PICKUP_TYPE.LIFE));
 			}
 		},
 

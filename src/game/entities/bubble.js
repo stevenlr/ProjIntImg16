@@ -40,6 +40,11 @@ game
 				this.sprite.remove();
 				game.scene.level.removeEntity(this);
 			}
+		},
+
+		remove: function() {
+			this.sprite.remove();
+			game.scene.level.removeEntity(this);
 		}
 	});
 });

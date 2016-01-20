@@ -12,7 +12,6 @@ game
 
 	game.createScene('Main', {
 		level: null,
-		boss_steven: null,
 
 		hud: {
 			bombIcon: null,
@@ -23,13 +22,7 @@ game
 
 		init: function() {
 			this.level = new game.Level();
-			var player = new game.Player(100, 100);
-			var boss_steven = new game.BossSteven(75, 300);
-
 			this.addObject(this.level);
-			this.level.setPlayer(player);
-			this.level.addEnemy(boss_steven);
-			this.boss_steven = boss_steven;
 
 			this.hud.bombIcon = new game.Sprite('graphics/Bullet03.png');
 			this.hud.bombIcon.position.x = 40;

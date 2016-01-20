@@ -12,7 +12,7 @@ game
 		size: {x: 0, y: 0},
 		sprite: null,
 		isDead: false,
-		life: 500,
+		life: 300,
 		keyboard: {l: false, r: false, u: false, d: false},
 		ACCELERATION: 20,
 		DIAG_ACCELERATION: Math.sqrt(2)/2,
@@ -26,7 +26,7 @@ game
 		
 		fireRate: 0.05,
 		timeFireRate: 0.5,
-		fireRateLong: 0.15,
+		fireRateLong: 0.2,
 
 		timePauseShoot: 1000,
 		timeFireRateLong: 3000,
@@ -153,7 +153,7 @@ game
 
 			if (this.life == 0) {
 				this.remove();
-				game.level.doBombExplosion();
+				game.scene.level.doBombExplosion();
 			}
 		},
 

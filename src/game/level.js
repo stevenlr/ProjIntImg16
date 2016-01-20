@@ -15,14 +15,20 @@ game
 		starsLayer1: null,
 		starsLayer2: null,
 		starsSpeed: 0.5,
+		time: 0,
+		boss: null,
 
 		init: function() {
 			this.world = new game.World(0, 0);
+
 			this.starsLayer1 = new game.TilingSprite('graphics/Background01.png', game.system.width, game.system.height);
 			this.starsLayer2 = new game.TilingSprite('graphics/Background02.png', game.system.width, game.system.height);
 
 			game.scene.stage.addChild(this.starsLayer1);
 			game.scene.stage.addChild(this.starsLayer2);
+			
+			var player = new game.Player(game.system.width / 2, game.system.height - 100);
+			this.setPlayer(player);
 
 			game.scene.addTimer(1000, this.spawnEnemy.bind(this), true);
 		},
@@ -35,11 +41,17 @@ game
 			this.world.update();
 			this.starsLayer1.tilePosition.y += this.starsSpeed * 1;
 			this.starsLayer2.tilePosition.y += this.starsSpeed * 2;
+			this.time += game.system.delta;
+
+			if (this.time >= 30 && !this.boss) {
+				this.boss = new game.BossSteven(75, 150);
+				game.scene.level.addEnemy(this.boss);
+			}
 		},
 
 		setPlayer: function(player) {
 			this.player = player;
-			this.addEntity(player, BODY_TYPE.PLAYER, [BODY_TYPE.BULLET_ENEMY, BODY_TYPE.PICKUP]);
+			this.addEntity(player, BODY_TYPE.PLAYER, [BODY_TYPE.BULLET_ENEMY, BODY_TYPE.PICKUP, BODY_TYPE.ENEMY]);
 		},
 
 		addEnemy: function(enemy) {

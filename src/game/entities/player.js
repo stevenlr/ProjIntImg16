@@ -10,18 +10,19 @@ game
 		size: {x: 0, y: 0},
 		sprite: null,
 		isDead: false,
-		life: 3,
-		maxLife: 5,
+		life: 10,
+		maxLife: 20,
 		bombs: 2,
 		body: null,
 		keyboard: {l: false, r: false, u: false, d: false},
-		ACCELERATION: 20,
+		ACCELERATION: 50,
 		DIAG_ACCELERATION: Math.sqrt(2)/2,
-		MAX_SPEED: 10,
+		MAX_SPEED: 50,
 		SQUARED_MAX_SPEED: 50 * 50,
-		FRICTION: 0.95,
+		FRICTION: 0.9,
 		weapon: null,
 		isShooting: false,
+		invicibility: 0,
 
 		init: function(x, y) {
 			this.sprite = new game.Sprite('graphics/Spaceship.png');
@@ -40,6 +41,8 @@ game
 		},
 
 		update: function() {
+			this.invicibility -= game.system.delta;
+
 			//Pre-update
 			this.weapon.update();
 			if (this.isShooting) {
@@ -127,6 +130,19 @@ game
 			}
 		},
 
+		hurt: function() {
+			if (this.invicibility > 0) {
+				return;
+			}
+
+			this.life--;
+			this.invicibility = 1;
+
+			if (this.life <= 0) {
+				this.life = 0;
+			}
+		},
+
 		collide: function(body) {
 			if (body.collisionGroup == BODY_TYPE.PICKUP) {
 				switch (body.entity.type) { 
@@ -143,6 +159,15 @@ game
 						body.entity.remove();
 						break;
 				}
+			} else if (body.collisionGroup == BODY_TYPE.BULLET_ENEMY) {
+				body.entity.remove();
+				this.weapon.levelDown();
+				this.hurt();
+			} else if (body.collisionGroup == BODY_TYPE.ENEMY && !body.entity.isBoss) {
+				body.entity.explode();
+				body.entity.remove();
+				this.hurt();
+				this.weapon.levelDown();
 			}
 		}
 	});
