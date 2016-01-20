@@ -47,13 +47,6 @@ game
 					this.stage.addChild(this.hud[e]);
 				}
 			}
-
-			this.addTimer(1000, this.spawnEnemy.bind(this), true);
-			this.spawnEnemy();
-		},
-
-		spawnEnemy: function() {
-			this.level.addEnemy(new game.Enemy(0));
 		},
 
 		update: function() {

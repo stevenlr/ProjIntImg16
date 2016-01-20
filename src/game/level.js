@@ -23,6 +23,12 @@ game
 
 			game.scene.stage.addChild(this.starsLayer1);
 			game.scene.stage.addChild(this.starsLayer2);
+
+			game.scene.addTimer(1000, this.spawnEnemy.bind(this), true);
+		},
+
+		spawnEnemy: function() {
+			game.scene.level.addEnemy(new game.Enemy(Math.floor(Math.random() * 3)));
 		},
 
 		update: function() {

@@ -135,18 +135,19 @@ game.module('game.entities.enemy')
 
 			switch (this.type) {
 				case 1: // Straight line
-					var bullet = new game.Bullet(x, y, Math.PI/2, 2, false);
+					var bullet = new game.Bullet(x, y, Math.PI/2, 6, false);
 					break;
 				case 2: // Aim player
 					var px = game.scene.level.player.position.x, py = game.scene.level.player.position.y;
 					var angle = Math.atan2(py - this.position.y, px - this.position.x);
 
-					var bullet = new game.Bullet(x, y, angle, 2, false);
+					var bullet = new game.Bullet(x, y, angle, 6, false);
 					break;
 			}
 			
-			game.scene.level.addBullet(bullet);
-			
+			if (bullet) {
+				game.scene.level.addBullet(bullet);
+			}
 		}
 	});
 });
