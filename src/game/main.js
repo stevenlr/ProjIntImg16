@@ -22,13 +22,14 @@ game
 		},
 
 		init: function() {
-			var boss_steven = new game.BossSteven(75, 300);
 			this.level = new game.Level();
 			var player = new game.Player(100, 100);
+			var boss_steven = new game.BossSteven(75, 300);
 
 			this.addObject(this.level);
 			this.level.setPlayer(player);
 			this.level.addEnemy(boss_steven);
+			this.boss_steven = boss_steven;
 
 			this.level.addPickup(new game.Pickup(300, 300, PICKUP_TYPE.BOMB));
 			this.level.addPickup(new game.Pickup(400, 300, PICKUP_TYPE.BOMB));
@@ -75,7 +76,6 @@ game
 
 		keydown: function(e) {
 			this.level.keydown(e);
-			this.boss_steven.keyup(e);
 		},
 
 		keyup: function(e) {   

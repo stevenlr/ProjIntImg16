@@ -11,7 +11,7 @@ game
 		size: {x: 0, y: 0},
 		sprite: null,
 		isDead: false,
-		life: 3,
+		life: 1000,
 		keyboard: {l: false, r: false, u: false, d: false},
 		ACCELERATION: 20,
 		DIAG_ACCELERATION: Math.sqrt(2)/2,
@@ -20,6 +20,17 @@ game
 		FRICTION: 0.95,
 		tween: null,
 		tweenRotate: null,
+		timer: null,
+		idPhase: 0,
+		
+		fireRate: 0.05,
+		timeFireRate: 0.5,
+		fireRateLong: 0.15,
+
+		timePauseShoot: 1000,
+		timeFireRateLong: 3000,
+		timeShootingPhase: 500,
+		phase: null,
 			
 		init: function(x, y) {
 			this.sprite = new game.Sprite('graphics/boss_steven.png');
@@ -68,21 +79,65 @@ game
 			this.tweenUp4.chain(this.tweenUp);
 
 			game.scene.stage.addChild(this.sprite);
+			this.timer = new game.Timer(0);
+
+			this.phase = [this.timePauseShoot, this.timeShootingPhase, this.timePauseShoot, this.timeShootingPhase
+						, this.timePauseShoot, this.timeShootingPhase, this.timePauseShoot, this.timeShootingPhase
+						, this.timePauseShoot, this.timeFireRateLong];
 		},
 
 		update: function() {
+			if (this.timer.time() >= this.phase[this.idPhase]) {
+				this.idPhase = (this.idPhase + 1) % this.phase.length;
+				this.timer.reset();
+				
+				if (this.idPhase == 0) {
+					this.generateRandomPhases();
+				}
+			}
+
 			this.sprite.position.set(this.position.x, this.position.y);
+			switch (this.idPhase) {
+				case 1: case 3: case 5: case 7:
+					this.timeFireRate += game.system.delta;
+					if (this.timeFireRate >= this.fireRate) {
+						this.timeFireRate -= this.fireRate;
+
+						this.shootBubble();
+					}
+					break;
+				case 0: case 2: case 4: case 6: case 8:
+					this.timeFireRate = 0;
+					break;
+				case 9:
+					this.timeFireRate += game.system.delta;
+					if (this.timeFireRate >= this.fireRateLong) {
+						this.timeFireRate -= this.fireRateLong;
+
+						this.shootBubble();
+					}
+					break;
+				default:
+			}
 		},
 
-		throwBubble: function() {
-
-		},
-
-		keyup: function(e) {
+		shootBubble: function() {
 			var pos = {x: this.position.x, y: this.position.y - 60};
 			var dir = {x: 0, y: 1};
-			var bubble = new game.Bubble(pos, dir, 100);
+			var bubble = new game.Bubble(pos, dir, 250);
 			game.scene.level.addBullet(bubble, false);
+		},
+
+		generateRandomPhases: function() {
+			this.phase = [];
+
+			for (var i = 0; i < 4; ++i) {
+				this.phase.push(this.timePauseShoot);
+				this.phase.push(this.timeShootingPhase);
+			}
+
+			this.phase.push(this.timePauseShoot);
+			this.phase.push(this.timeFireRateLong);
 		}
 	});
 });
