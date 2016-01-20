@@ -46,6 +46,7 @@ game
 			if (this.time >= 30 && !this.boss) {
 				this.boss = new game.BossSteven(75, 150);
 				game.scene.level.addEnemy(this.boss);
+				game.scene.startBoss();
 			}
 		},
 

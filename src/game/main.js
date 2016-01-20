@@ -20,6 +20,13 @@ game
 			lifeFg: null
 		},
 
+		hudBoss: {
+			lifeBg2: null,
+			lifeFg2: null
+		},
+
+		hasBoss: false,
+
 		init: function() {
 			this.level = new game.Level();
 			this.addObject(this.level);
@@ -40,6 +47,14 @@ game
 			this.hud.lifeFg.center();
 			this.hud.lifeFg.position.y = game.system.height - 40;
 
+			this.hudBoss.lifeBg2 = new game.Sprite('graphics/lifebar_bg.png');
+			this.hudBoss.lifeBg2.center();
+			this.hudBoss.lifeBg2.position.y = 40;
+
+			this.hudBoss.lifeFg2 = new game.Sprite('graphics/lifebar_fg.png');
+			this.hudBoss.lifeFg2.center();
+			this.hudBoss.lifeFg2.position.y = 40;
+
 			for (var e in this.hud) {
 				if (this.hud[e] != null) {
 					this.stage.addChild(this.hud[e]);
@@ -47,10 +62,24 @@ game
 			}
 		},
 
+		startBoss: function() {
+			for (var e in this.hudBoss) {
+				if (this.hudBoss[e] != null) {
+					this.stage.addChild(this.hudBoss[e]);
+				}
+			}
+
+			this.hasBoss = true;
+		},
+
 		update: function() {
 			this._super();
 			this.hud.bombText.setText(this.level.player.bombs);
 			this.hud.lifeFg.crop(0, 0, this.hud.lifeBg.width * this.level.player.life / this.level.player.maxLife, this.hud.lifeFg.height);
+
+			if (this.hasBoss === true) {
+				this.hudBoss.lifeFg2.crop(0, 0, this.hudBoss.lifeBg2.width * this.level.boss.life / this.level.boss.maxLife, this.hudBoss.lifeFg2.height);
+			}
 		},
 
 		keydown: function(e) {

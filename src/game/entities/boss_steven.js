@@ -13,6 +13,7 @@ game
 		sprite: null,
 		isDead: false,
 		life: 300,
+		maxLife: 300,
 		keyboard: {l: false, r: false, u: false, d: false},
 		ACCELERATION: 20,
 		DIAG_ACCELERATION: Math.sqrt(2)/2,
