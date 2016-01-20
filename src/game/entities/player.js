@@ -21,12 +21,11 @@ game
 
 		init: function(x, y) {
 			this.sprite = new game.Sprite('graphics/Spaceship.png');
-			this.sprite.anchor.set(0.5, 0.5);
-			this.sprite.position.set(x, y);
-			this.position.x = x;
-			this.position.y = y;
 			this.size.x = this.sprite.width;
 			this.size.y = this.sprite.height;
+			this.position.x = x - this.size.x / 2;
+			this.position.y = y - this.size.y / 2;
+			this.sprite.position.set(this.position.x, this.position.y);
 			game.scene.stage.addChild(this.sprite);
 		},
 
@@ -66,17 +65,14 @@ game
 			this.position.x = this.position.x + this.speed.x;
 			this.position.y = this.position.y + this.speed.y;
 
-			var w = this.size.x * 0.5;
-			var h = this.size.y * 0.5;
-
-			if (this.position.x < w)
-				this.position.x = w;
-			if (this.position.x >= game.system.width - w)
-				this.position.x = game.system.width - w - 1;
-			if (this.position.y < h)
-				this.position.y = h;
-			if (this.position.y >= game.system.height - h)
-				this.position.y = game.system.height - h - 1;
+			if (this.position.x < 0)
+				this.position.x = 0;
+			if (this.position.x + this.size.x >= game.system.width)
+				this.position.x = game.system.width - this.size.x - 1;
+			if (this.position.y < 0)
+				this.position.y = 0;
+			if (this.position.y + this.size.y >= game.system.height)
+				this.position.y = game.system.height - this.size.y - 1;
 
 			this.speed.x = this.speed.x * this.FRICTION;
 			this.speed.y = this.speed.y * this.FRICTION;
@@ -99,6 +95,10 @@ game
 			this.keyboard.r = e == 'RIGHT' || this.keyboard.r;
 			this.keyboard.u = e == 'UP' || this.keyboard.u;
 			this.keyboard.d = e == 'DOWN' || this.keyboard.d;
+		},
+
+		collide: function(body) {
+			alert('YAAAAAY');
 		}
 	});
 });

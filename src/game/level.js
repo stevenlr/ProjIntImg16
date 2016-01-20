@@ -9,14 +9,19 @@ game
 		ENTITY_ENNEMY: 1,
 		ENTITY_BULLET_FRIEND: 2,
 		ENTITY_BULLET_ENNEMY: 3,
+		ENTITY_PICKUP: 4,
 
 		init: function() {
 			this.world = new game.World(0, 0);
 		},
 
+		update: function() {
+			this.world.update();
+		},
+
 		setPlayer: function(player) {
 			this.player = player;
-			this.addEntity(player, this.ENTITY_PLAYER, [this.ENTITY_BULLET_ENNEMY]);
+			this.addEntity(player, this.ENTITY_PLAYER, [this.ENTITY_BULLET_ENNEMY, this.ENTITY_PICKUP]);
 		},
 
 		addEnnemy: function(ennemy) {
@@ -28,6 +33,10 @@ game
 				friendly ? this.ENTITY_BULLET_FRIEND : this.ENTITY_BULLET_ENNEMY,
 				friendly ? [this.ENTITY_ENNEMY] : [this.ENTITY_PLAYER]
 			);
+		},
+
+		addPickup: function(pickup) {
+			this.addEntity(pickup, this.ENTITY_PICKUP, [this.ENTITY_PLAYER]);
 		},
 
 		addEntity: function(entity, type, against) {
@@ -42,6 +51,7 @@ game
 
 			var shape = new game.Rectangle(entity.size.x, entity.size.y);
 
+			body.entity = entity;
 			body.addShape(shape);
 			this.world.addBody(body);
 			entity.body = body;

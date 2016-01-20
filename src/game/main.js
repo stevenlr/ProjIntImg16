@@ -2,7 +2,8 @@ game
 .module('game.main')
 .require(
 	'game.level',
-	'game.entities.player'
+	'game.entities.player',
+	'game.entities.pickup'
 )
 .body(function() {
 
@@ -17,6 +18,9 @@ game
 
 			this.addObject(this.level);
 			this.addObject(player);
+
+			var pickup = new game.Pickup(300, 300, PICKUP_TYPE.DUMMY);
+			this.level.addPickup(pickup);
 		},
 
 		keydown: function(e) {
