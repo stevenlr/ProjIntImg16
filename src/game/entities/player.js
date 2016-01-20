@@ -1,7 +1,6 @@
 game
 .module('game.entities.player')
 .body(function() {
-	game.addAsset('graphics/Spaceship.png');
 
 	game.createClass('Player', {
 		position: {x: 0, y: 0},
@@ -11,6 +10,8 @@ game
 		sprite: null,
 		isDead: false,
 		life: 3,
+		maxLife: 5,
+		bombs: 2,
 		body: null,
 		keyboard: {l: false, r: false, u: false, d: false},
 		ACCELERATION: 20,
@@ -98,7 +99,11 @@ game
 		},
 
 		collide: function(body) {
-			alert('YAAAAAY');
+			if (body.collisionGroup == BODY_TYPE.PICKUP) {
+				if (body.entity.type == PICKUP_TYPE.BOMB) {
+					this.bombs++;
+				}
+			}
 		}
 	});
 });

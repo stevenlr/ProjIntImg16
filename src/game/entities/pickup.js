@@ -1,11 +1,10 @@
 var PICKUP_TYPE = {
-	DUMMY: 0
+	BOMB: 0
 };
 
 game
 .module('game.entities.pickup')
 .body(function() {
-	game.addAsset('graphics/Bullet03.png');
 
 	game.createClass('Pickup', {
 		position: {x: 0, y: 0},
@@ -17,7 +16,7 @@ game
 
 		init: function(x, y, type) {
 			switch (type) {
-				case PICKUP_TYPE.DUMMY:
+				case PICKUP_TYPE.BOMB:
 					this.sprite = new game.Sprite('graphics/Bullet03.png');
 				break;
 			}
@@ -33,7 +32,7 @@ game
 
 		collide: function(e) {
 			game.scene.level.removeEntity(this);
-			game.scene.stage.removeChild(this.sprite);
+			this.sprite.remove();
 		}
 	});
 });
