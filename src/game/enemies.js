@@ -11,6 +11,8 @@ game.createClass('Enemy', {
 	sprite: null,
 
 	init: function() {
+		this.type = type;
+
 		this.sprite = new game.Sprite('graphics/Spaceship01.png');
 		this.sprite.anchor.set(0.5, 0.5);
 
