@@ -1,8 +1,6 @@
 game
 .module('game.entities.bullet')
 .body(function() {
-	game.addAsset('graphics/Bullet01.png');
-
 	game.createClass('Bullet',{
 		position: {x: 0, y: 0},
 		direction: {x: 0, y: 0},
@@ -12,9 +10,12 @@ game
 		body: null,
 		friendly: false,
 
-		init: function(x,y, angle, speed, friendly){
+		init: function(x, y, angle, speed, friendly){
 			this.friendly = friendly;
-			this.sprite = new game.Sprite('graphics/Bullet01.png');
+			if(friendly)
+				this.sprite = new game.Sprite('graphics/Bullet01.png');
+			else
+				this.sprite = new game.Sprite('graphics/Bullet02.png');
 			this.size.x = Math.max(this.sprite.width, this.sprite.height);
 			this.size.y = Math.max(this.sprite.width, this.sprite.height);
 
@@ -24,20 +25,19 @@ game
 
 			this.position.x = x;
 			this.position.y = y;
-			this.sprite.anchor.set(0.5, 0.5);
+			
 			this.sprite.rotation = Math.PI/2;
+			this.sprite.anchor.set(0.5, 0.5);
 
 			this.sprite.position.set(this.position.x, this.position.y);
 			game.scene.stage.addChild(this.sprite);
 		},
-
-
 		
 		update: function(x,y) {
-			this.sprite.position.set(this.position.x, this.position.y);
 			this.position.x += this.direction.x * this.speed;
 			this.position.y += this.direction.y * this.speed;
 		  	this.body.position.set(this.position.x, this.position.y);
+		  	this.sprite.position.set(this.position.x, this.position.y);
 
 		  	if (this.position.y < -20 || this.position.x < -20 || this.position.x >= game.system.width + 20) {
 				this.remove();

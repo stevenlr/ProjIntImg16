@@ -33,6 +33,9 @@ game
 			this.sprite.anchor.set(0.5, 0.5);
 			this.weapon = new game.Weapon(this);
 
+			this.size.x *= 0.35;
+			this.size.y *= 0.7;
+
 			game.scene.stage.addChild(this.sprite);
 		},
 

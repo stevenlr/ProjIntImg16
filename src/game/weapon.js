@@ -26,7 +26,6 @@ game
 
 				var x = this.player.position.x, y = this.player.position.y - 40;
 
-				
 				if(this.level==1){
 
 					var bullet = new game.Bullet(x, y, -Math.PI/2, 5, true);

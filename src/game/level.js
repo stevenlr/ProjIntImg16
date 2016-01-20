@@ -23,6 +23,12 @@ game
 
 			game.scene.stage.addChild(this.starsLayer1);
 			game.scene.stage.addChild(this.starsLayer2);
+
+			game.scene.addTimer(1000, this.spawnEnemy.bind(this), true);
+		},
+
+		spawnEnemy: function() {
+			game.scene.level.addEnemy(new game.Enemy(Math.floor(Math.random() * 3)));
 		},
 
 		update: function() {
@@ -40,10 +46,10 @@ game
 			this.addEntity(enemy, BODY_TYPE.ENEMY, [BODY_TYPE.BULLET_FRIEND]);
 		},
 
-		addBullet: function(bullet, friendly) {
+		addBullet: function(bullet) {
 			this.addEntity(bullet,
-				friendly ? BODY_TYPE.BULLET_FRIEND : BODY_TYPE.BULLET_ENEMY,
-				friendly ? [BODY_TYPE.ENEMY] : [BODY_TYPE.PLAYER]
+				bullet.friendly ? BODY_TYPE.BULLET_FRIEND : BODY_TYPE.BULLET_ENEMY,
+				bullet.friendly ? [BODY_TYPE.ENEMY] : [BODY_TYPE.PLAYER]
 			);
 		},
 
