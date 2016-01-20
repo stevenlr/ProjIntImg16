@@ -12,7 +12,7 @@ game
 		size: {x: 0, y: 0},
 		sprite: null,
 		isDead: false,
-		life: 1000,
+		life: 500,
 		keyboard: {l: false, r: false, u: false, d: false},
 		ACCELERATION: 20,
 		DIAG_ACCELERATION: Math.sqrt(2)/2,
@@ -32,6 +32,7 @@ game
 		timeFireRateLong: 3000,
 		timeShootingPhase: 500,
 		phase: null,
+		isBoss: true,
 			
 		init: function(x, y) {
 			this.spriteBoss = new game.Sprite('graphics/boss_steven.png');
@@ -43,8 +44,8 @@ game
 			this.startY = y;
 			this.position.x = x;
 			this.position.y = y;
-			this.size.x = this.sprite.width;
-			this.size.y = this.sprite.height;
+			this.size.x = this.sprite.width * 0.9;
+			this.size.y = this.sprite.height * 0.8;
 			this.tween = new game.Tween(this.position);
 			this.tween.to({x:game.system.width - this.size.x / 2}, 3000);
 			this.tween.easing('Quadratic.InOut');
@@ -100,6 +101,7 @@ game
 			}
 
 			this.sprite.position.set(this.position.x, this.position.y);
+			this.body.position.set(this.position.x, this.position.y);
 			switch (this.idPhase) {
 				case 1: case 3: case 5: case 7:
 					this.sprite.texture = this.spriteBlep.texture;
@@ -144,6 +146,27 @@ game
 
 			this.phase.push(this.timePauseShoot);
 			this.phase.push(this.timeFireRateLong);
-		}
+		},
+
+		hurt: function() {
+			this.life--;
+
+			if (this.life == 0) {
+				this.remove();
+				game.level.doBombExplosion();
+			}
+		},
+
+		collide: function(body) {
+			if (body.collisionGroup == BODY_TYPE.BULLET_FRIEND) {
+				body.entity.remove();
+				this.hurt();
+			}
+		},
+
+		remove: function() {
+			this.sprite.remove();
+			game.scene.level.removeEntity(this);
+		},
 	});
 });

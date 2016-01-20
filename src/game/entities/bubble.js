@@ -24,6 +24,7 @@ game
 			this.dir = dir;
 			this.size.x = this.sprite.width;
 			this.size.y = this.sprite.height;
+			this.sprite.anchor.set(0.5, 0.5);
 
 			game.scene.stage.addChild(this.sprite);
 		},

@@ -109,7 +109,7 @@ game
 			for (var id in game.scene.objects) {
 				var obj = game.scene.objects[id];
 
-				if (obj.body && obj.body.collisionGroup == BODY_TYPE.ENEMY) {
+				if (obj.body && obj.body.collisionGroup == BODY_TYPE.ENEMY && ! obj.isBoss) {
 					(obj.explode !== undefined) && obj.explode();
 					(obj.remove !== undefined) && obj.remove();
 				}
