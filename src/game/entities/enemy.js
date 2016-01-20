@@ -22,6 +22,7 @@ game.module('game.entities.enemy')
 			this.size.y = this.sprite.height;
 
 			game.scene.addObject(this);
+			this.sprite.addTo(game.scene.stage);
 		},
 
 		update: function() {

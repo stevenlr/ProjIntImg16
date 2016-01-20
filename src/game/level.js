@@ -88,10 +88,28 @@ game
 		},
 
 		doBombExplosion: function() {
+			var emitter = new game.Emitter();
+			emitter.textures.push('graphics/smoke.png');
+			emitter.position.set(game.system.width / 2, game.system.height / 2);
+			emitter.addTo(game.scene.stage);
+			emitter.positionVar.set(game.system.width / 3, game.system.height / 3);
+			emitter.count = 25;
+			emitter.duration = 200;
+			emitter.startAlpha = 1.0;
+			emitter.endAlpha = 0;
+			emitter.startScale = 1;
+			emitter.endScale = 2.5;
+			emitter.rotate = 0;
+			emitter.rotateVar = 1;
+			emitter.angle = 0;
+			emitter.angleVar = 3;
+			emitter.speed = 0;
+			game.scene.addEmitter(emitter);
+
 			for (var id in game.scene.objects) {
 				var obj = game.scene.objects[id];
 
-				if (obj.body !== undefined && obj.body.collisionGroup == BODY_TYPE.ENEMY) {
+				if (obj.body && obj.body.collisionGroup == BODY_TYPE.ENEMY) {
 					this.removeEntity(obj);
 					(obj.sprite !== undefined) && obj.sprite.remove();
 				}

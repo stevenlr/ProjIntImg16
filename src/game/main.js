@@ -57,7 +57,7 @@ game
 		},
 
 		spawnEnemy: function() {
-			var enemy = new game.Enemy().sprite.addTo(this.stage);
+			this.level.addEnemy(new game.Enemy());
 		},
 
 		update: function() {
