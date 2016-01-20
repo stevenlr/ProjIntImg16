@@ -1,5 +1,6 @@
 game
 .module('game.entities.player')
+.require('game.weapon')
 .body(function() {
 
 	game.createClass('Player', {
@@ -19,6 +20,8 @@ game
 		MAX_SPEED: 10,
 		SQUARED_MAX_SPEED: 50 * 50,
 		FRICTION: 0.95,
+		weapon: null,
+		isShooting: false,
 
 		init: function(x, y) {
 			this.sprite = new game.Sprite('graphics/Spaceship.png');
@@ -27,10 +30,21 @@ game
 			this.position.x = x - this.size.x / 2;
 			this.position.y = y - this.size.y / 2;
 			this.sprite.position.set(this.position.x, this.position.y);
+			this.sprite.anchor.set(0.5, 0.5);
+			this.weapon = new game.Weapon(this);
+
 			game.scene.stage.addChild(this.sprite);
 		},
 
 		update: function() {
+			//Pre-update
+			this.weapon.update();
+			if (this.isShooting) {
+				this.weapon.shoot();
+			}
+
+
+			//Move
 			this.acc = {x: 0, y: 0};
 
 			if (this.keyboard.l)
@@ -89,6 +103,7 @@ game
 			this.keyboard.r = !(e == 'RIGHT') && this.keyboard.r;
 			this.keyboard.u = !(e == 'UP') && this.keyboard.u;
 			this.keyboard.d = !(e == 'DOWN') && this.keyboard.d;
+			this.isShooting = !(e == 'SPACE') && this.isShooting;
 		},
 
 		keydown: function(e) {
@@ -96,6 +111,7 @@ game
 			this.keyboard.r = e == 'RIGHT' || this.keyboard.r;
 			this.keyboard.u = e == 'UP' || this.keyboard.u;
 			this.keyboard.d = e == 'DOWN' || this.keyboard.d;
+			this.isShooting = e == 'SPACE' || this.isShooting;
 
 			if (e == 'W') {
 				if (this.bombs > 0) {
@@ -107,7 +123,7 @@ game
 
 		collide: function(body) {
 			if (body.collisionGroup == BODY_TYPE.PICKUP) {
-				if (body.entity.type == PICKUP_TYPE.BOMB) {
+				if (body.entity.type == PICKUP_TYPE.ENNEMY) {
 					this.bombs++;
 				}
 			}
