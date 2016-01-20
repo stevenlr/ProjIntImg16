@@ -1,8 +1,8 @@
 var BODY_TYPE = {
 	PLAYER: 0,
-	ENNEMY: 1,
+	ENEMY: 1,
 	BULLET_FRIEND: 2,
-	BULLET_ENNEMY: 3,
+	BULLET_ENEMY: 3,
 	PICKUP: 4
 };
 
@@ -33,17 +33,17 @@ game
 
 		setPlayer: function(player) {
 			this.player = player;
-			this.addEntity(player, BODY_TYPE.PLAYER, [BODY_TYPE.BULLET_ENNEMY, BODY_TYPE.PICKUP]);
+			this.addEntity(player, BODY_TYPE.PLAYER, [BODY_TYPE.BULLET_ENEMY, BODY_TYPE.PICKUP]);
 		},
 
-		addEnnemy: function(ennemy) {
-			this.addEntity(ennemy, BODY_TYPE.ENNEMY, [BODY_TYPE.BULLET_FRIEND]);
+		addEnemy: function(enemy) {
+			this.addEntity(enemy, BODY_TYPE.ENEMY, [BODY_TYPE.BULLET_FRIEND]);
 		},
 
 		addBullet: function(bullet, friendly) {
 			this.addEntity(bullet,
-				friendly ? BODY_TYPE.BULLET_FRIEND : BODY_TYPE.BULLET_ENNEMY,
-				friendly ? [BODY_TYPE.ENNEMY] : [BODY_TYPE.PLAYER]
+				friendly ? BODY_TYPE.BULLET_FRIEND : BODY_TYPE.BULLET_ENEMY,
+				friendly ? [BODY_TYPE.ENEMY] : [BODY_TYPE.PLAYER]
 			);
 		},
 
@@ -91,7 +91,7 @@ game
 			for (var id in game.scene.objects) {
 				var obj = game.scene.objects[id];
 
-				if (obj.body !== undefined && obj.body.collisionGroup == BODY_TYPE.ENNEMY) {
+				if (obj.body !== undefined && obj.body.collisionGroup == BODY_TYPE.ENEMY) {
 					this.removeEntity(obj);
 					(obj.sprite !== undefined) && obj.sprite.remove();
 				}
