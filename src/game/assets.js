@@ -9,4 +9,6 @@ game.module('game.assets')
 	game.addAsset('graphics/Background02.png');
 	game.addAsset('graphics/Background01.png');
 	game.addAsset('graphics/smoke.png');
+	game.addAsset('graphics/Enemy01.png');
+	game.addAsset('graphics/Enemy03.png');
 });
