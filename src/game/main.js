@@ -57,7 +57,7 @@ game
 		},
 
 		spawnEnemy: function() {
-			var enemy = new game.Enemy().sprite.addTo(this.stage);
+			var enemy = new game.Enemy('graphics/Spaceship01.png', 2, 1).sprite.addTo(this.stage);
 		},
 
 		update: function() {
