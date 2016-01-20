@@ -10,19 +10,25 @@ game.module('game.entities.enemy')
 		sprite: null,
 		type: 0,
 		timer: 0,
+		timerShoot: 0,
+		timerShootMax: 2,
 		life: 1,
 
 		init: function(type) {
 			this.type = type;
 
 			switch (type) {
+				case 0:
+					this.sprite = new game.Sprite('graphics/Enemy02.png');
+					this.life = 5;
+					break;
 				case 1:
-					this.sprite = new game.Sprite('graphics/Enemy01.png');
+					this.sprite = new game.Sprite('graphics/Enemy03.png');
 					this.life = 1;
 					break;
 				case 2:
-					this.sprite = new game.Sprite('graphics/Enemy03.png');
-					this.life = 1;
+					this.sprite = new game.Sprite('graphics/Enemy01.png');
+					this.life = 3;
 					break;
 			}
 
@@ -42,14 +48,14 @@ game.module('game.entities.enemy')
 		},
 
 		update: function() {
-			if(this.type == 1)
+			if(this.type == 1) // Sinus
 			{
 				this.position.y += 1;
 				this.position.x = this.spawn.x + this.A*Math.sin(this.position.y/this.F);
 			}
-			else if (this.type == 2)
+			else if (this.type == 2) // Straight line then focus center
 			{
-				if(this.timer > 300)
+				if(this.timer > 3)
 				{
 					this.position.y += 5;
 					this.position.x -= 5 *(this.position.x - game.system.width / 2) / (game.system.width - this.position.y);
@@ -57,10 +63,10 @@ game.module('game.entities.enemy')
 				else
 				{
 					this.position.y += 1;
-					this.timer++;
+					this.timer += game.system.delta;
 				}
 			}
-			else
+			else // Straight line
 			{
 				this.position.y += 1;
 			}
@@ -72,11 +78,24 @@ game.module('game.entities.enemy')
 			if(this.position.y - this.size.y / 2 > game.system.height) {
 				this.remove();
 			}
+
+			this.timerShoot += game.system.delta;
+			if (this.timerShoot >= this.timerShootMax) {
+				this.timerShoot = 0;
+				this.shoot();
+			}
+				
 		},
 
 		collide: function(body) {
-			if (body.collisionGroup == BODY_TYPE.BULLET_FRIEND) {
+			if (body.collisionGroup == BODY_TYPE.BULLET_FRIEND)
+			{
 				body.entity.remove();
+				this.life--;
+			}
+
+			if(this.life == 0)
+			{
 				this.explode();
 				this.remove();
 			}
@@ -109,6 +128,25 @@ game.module('game.entities.enemy')
 			if (Math.random() <= 0.05) {
 				game.scene.level.addPickup(new game.Pickup(this.position.x, this.position.y, PICKUP_TYPE.BOMB));
 			}
+		},
+
+		shoot: function() {		
+			var x = this.position.x, y = this.position.y + this.size.y/2;
+
+			switch (this.type) {
+				case 1: // Straight line
+					var bullet = new game.Bullet(x, y, Math.PI/2, 2, false);
+					break;
+				case 2: // Aim player
+					var px = game.scene.level.player.position.x, py = game.scene.level.player.position.y;
+					var angle = Math.atan2(py - this.position.y, px - this.position.x);
+
+					var bullet = new game.Bullet(x, y, angle, 2, false);
+					break;
+			}
+			
+			game.scene.level.addBullet(bullet);
+			
 		}
 	});
 });

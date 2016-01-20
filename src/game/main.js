@@ -53,7 +53,7 @@ game
 		},
 
 		spawnEnemy: function() {
-			this.level.addEnemy(new game.Enemy(2));
+			this.level.addEnemy(new game.Enemy(0));
 		},
 
 		update: function() {

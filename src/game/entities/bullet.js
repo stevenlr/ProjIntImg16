@@ -1,8 +1,6 @@
 game
 .module('game.entities.bullet')
 .body(function() {
-	game.addAsset('graphics/Bullet01.png');
-
 	game.createClass('Bullet',{
 		position: {x: 0, y: 0},
 		direction: {x: 0, y: 0},
@@ -14,7 +12,10 @@ game
 
 		init: function(x,y, angle, speed, friendly){
 			this.friendly = friendly;
-			this.sprite = new game.Sprite('graphics/Bullet01.png');
+			if(friendly)
+				this.sprite = new game.Sprite('graphics/Bullet01.png');
+			else
+				this.sprite = new game.Sprite('graphics/Bullet02.png');
 			this.size.x = Math.max(this.sprite.width, this.sprite.height);
 			this.size.y = Math.max(this.sprite.width, this.sprite.height);
 
@@ -30,8 +31,6 @@ game
 			this.sprite.position.set(this.position.x, this.position.y);
 			game.scene.stage.addChild(this.sprite);
 		},
-
-
 		
 		update: function(x,y) {
 			this.sprite.position.set(this.position.x, this.position.y);

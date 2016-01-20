@@ -40,10 +40,10 @@ game
 			this.addEntity(enemy, BODY_TYPE.ENEMY, [BODY_TYPE.BULLET_FRIEND]);
 		},
 
-		addBullet: function(bullet, friendly) {
+		addBullet: function(bullet) {
 			this.addEntity(bullet,
-				friendly ? BODY_TYPE.BULLET_FRIEND : BODY_TYPE.BULLET_ENEMY,
-				friendly ? [BODY_TYPE.ENEMY] : [BODY_TYPE.PLAYER]
+				bullet.friendly ? BODY_TYPE.BULLET_FRIEND : BODY_TYPE.BULLET_ENEMY,
+				bullet.friendly ? [BODY_TYPE.ENEMY] : [BODY_TYPE.PLAYER]
 			);
 		},
 

@@ -25,11 +25,11 @@ game
 				var x = this.player.position.x, y = this.player.position.y - 40;
 
 				var bullet = new game.Bullet(x, y, -Math.PI/2, 5, true);
-				game.scene.level.addBullet(bullet, true);
+				game.scene.level.addBullet(bullet);
 				bullet = new game.Bullet(x + 20, y + 30, -Math.PI/3, 5, true);
-				game.scene.level.addBullet(bullet, true);
+				game.scene.level.addBullet(bullet);
 				bullet = new game.Bullet(x - 20, y + 30, -2*Math.PI/3, 5, true);
-				game.scene.level.addBullet(bullet, true);
+				game.scene.level.addBullet(bullet);
 			}
 		},
 
