@@ -5,12 +5,14 @@ game
 	'game.entities.player',
 	'game.entities.pickup',
 	'game.entities.enemy',
-	'game.assets'
+	'game.assets',
+	'game.entities.boss_steven'
 )
 .body(function() {
 
 	game.createScene('Main', {
 		level: null,
+		boss_steven: null,
 
 		hud: {
 			bombIcon: null,
@@ -20,11 +22,13 @@ game
 		},
 
 		init: function() {
+			var boss_steven = new game.BossSteven(75, 300);
 			this.level = new game.Level();
 			var player = new game.Player(100, 100);
 
 			this.addObject(this.level);
 			this.level.setPlayer(player);
+			this.level.addEnemy(boss_steven);
 
 			this.level.addPickup(new game.Pickup(300, 300, PICKUP_TYPE.BOMB));
 			this.level.addPickup(new game.Pickup(400, 300, PICKUP_TYPE.BOMB));
@@ -51,13 +55,16 @@ game
 					this.stage.addChild(this.hud[e]);
 				}
 			}
-			
-			this.addTimer(1000, this.spawnEnemy.bind(this), true);
-			this.spawnEnemy();
 		},
 
 		spawnEnemy: function() {
 			this.level.addEnemy(new game.Enemy());
+
+			this.addObject(this.level);
+			this.addObject(player);
+			this.addObject(boss_steven);
+
+			this.boss_steven = boss_steven;
 		},
 
 		update: function() {
@@ -68,6 +75,7 @@ game
 
 		keydown: function(e) {
 			this.level.keydown(e);
+			this.boss_steven.keyup(e);
 		},
 
 		keyup: function(e) {   

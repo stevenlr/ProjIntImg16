@@ -1,0 +1,88 @@
+game
+.module('game.entities.boss_steven')
+.require('game.entities.bubble')
+.body(function() {
+	game.addAsset('graphics/boss_steven.png');
+
+	game.createClass('BossSteven', {
+		position: {x: 0, y: 0},
+		speed: {x: 0, y: 0},
+		acc: {x: 0, y: 0},
+		size: {x: 0, y: 0},
+		sprite: null,
+		isDead: false,
+		life: 3,
+		keyboard: {l: false, r: false, u: false, d: false},
+		ACCELERATION: 20,
+		DIAG_ACCELERATION: Math.sqrt(2)/2,
+		MAX_SPEED: 10,
+		SQUARED_MAX_SPEED: 50 * 50,
+		FRICTION: 0.95,
+		tween: null,
+		tweenRotate: null,
+			
+		init: function(x, y) {
+			this.sprite = new game.Sprite('graphics/boss_steven.png');
+			this.sprite.position.set(x, y);
+			this.sprite.rotation = -0.2;
+			this.sprite.anchor.set(0.5, 1);
+			this.startY = y;
+			this.position.x = x;
+			this.position.y = y;
+			this.size.x = this.sprite.width;
+			this.size.y = this.sprite.height;
+			this.tween = new game.Tween(this.position);
+			this.tween.to({x:game.system.width - this.size.x / 2}, 3000);
+			this.tween.easing('Quadratic.InOut');
+			this.tween.repeat();
+			this.tween.yoyo();
+			this.tween.start();
+
+			this.tweenRotate = new game.Tween(this.sprite);
+			this.tweenRotate.to({rotation: 0.2}, 3000);
+			this.tweenRotate.easing('Quadratic.InOut');
+			this.tweenRotate.repeat();
+			this.tweenRotate.yoyo();
+			this.tweenRotate.start();
+
+			this.tweenUp4 = new game.Tween(this.position);
+			this.tweenUp4.to({y: this.startY}, 1500);
+			this.tweenUp4.easing('Quadratic.In');
+
+			this.tweenUp3 = new game.Tween(this.position);
+			this.tweenUp3.easing('Quadratic.Out');
+			this.tweenUp3.to({y: this.startY - 50}, 1500);
+			this.tweenUp3.chain(this.tweenUp4);
+
+			this.tweenUp2 = new game.Tween(this.position);
+			this.tweenUp2.to({y: this.startY}, 1500);
+			this.tweenUp2.easing('Quadratic.In');
+			this.tweenUp2.chain(this.tweenUp3);
+
+			this.tweenUp = new game.Tween(this.position);
+			this.tweenUp.to({y: this.startY + 50}, 1500);
+			this.tweenUp.easing('Quadratic.Out');
+			this.tweenUp.chain(this.tweenUp2);
+			this.tweenUp.start();
+
+			this.tweenUp4.chain(this.tweenUp);
+
+			game.scene.stage.addChild(this.sprite);
+		},
+
+		update: function() {
+			this.sprite.position.set(this.position.x, this.position.y);
+		},
+
+		throwBubble: function() {
+
+		},
+
+		keyup: function(e) {
+			var pos = {x: this.position.x, y: this.position.y - 60};
+			var dir = {x: 0, y: 1};
+			var bubble = new game.Bubble(pos, dir, 100);
+			game.scene.level.addBullet(bubble, false);
+		}
+	});
+});
