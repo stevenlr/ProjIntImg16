@@ -155,6 +155,7 @@ game
 						body.entity.remove();
 						break;
 					case PICKUP_TYPE.UPGRADE:
+						game.audio.playSound('weapon');
 						this.weapon.levelUp();
 						body.entity.remove();
 						break;

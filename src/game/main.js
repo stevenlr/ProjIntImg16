@@ -10,6 +10,7 @@ game
 )
 .body(function() {
 	game.addAudio('audio/fx/laser.wav', 'laser');
+	game.addAudio('audio/fx/WeaponChange.wav', 'weapon');
 	game.addAudio('audio/music/Level01.wav', 'm1');
 	game.addAudio('audio/music/Level02.wav', 'm2');
 	game.addAudio('audio/fx/laser_enemy.wav', 'laserEnemy');
