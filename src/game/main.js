@@ -26,10 +26,6 @@ game
 			this.addObject(this.level);
 			this.level.setPlayer(player);
 
-			this.level.addPickup(new game.Pickup(300, 300, PICKUP_TYPE.BOMB));
-			this.level.addPickup(new game.Pickup(400, 300, PICKUP_TYPE.BOMB));
-			this.level.addPickup(new game.Pickup(450, 350, PICKUP_TYPE.BOMB));
-
 			this.hud.bombIcon = new game.Sprite('graphics/Bullet03.png');
 			this.hud.bombIcon.position.x = 40;
 			this.hud.bombIcon.position.y = game.system.height - 40;

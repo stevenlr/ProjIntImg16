@@ -31,7 +31,18 @@ game
 			game.scene.stage.addChild(this.sprite);
 		},
 
-		collide: function(e) {
+		update: function() {
+			this.position.y += 100 * game.system.delta;
+			this.sprite.position.set(this.position.x, this.position.y);
+			this.body.position.x = this.position.x;
+			this.body.position.y = this.position.y;
+
+			if (this.position.y < -20 || this.position.x < -20 || this.position.x >= game.system.width + 20) {
+				this.remove();
+			}
+		},
+
+		remove: function() {
 			game.scene.level.removeEntity(this);
 			this.sprite.remove();
 		}

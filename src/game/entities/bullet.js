@@ -40,9 +40,13 @@ game
 		  	this.body.position.set(this.position.x, this.position.y);
 
 		  	if (this.position.y < -20 || this.position.x < -20 || this.position.x >= game.system.width + 20) {
-		  		this.sprite.remove();
-				game.scene.level.removeEntity(this);
+				this.remove();
 			}
+		},
+
+		remove: function() {
+			this.sprite.remove();
+			game.scene.level.removeEntity(this);
 		}
 	});
 });

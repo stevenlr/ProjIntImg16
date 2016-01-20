@@ -125,6 +125,7 @@ game
 			if (body.collisionGroup == BODY_TYPE.PICKUP) {
 				if (body.entity.type == PICKUP_TYPE.BOMB) {
 					this.bombs++;
+					body.entity.remove();
 				}
 			}
 		}

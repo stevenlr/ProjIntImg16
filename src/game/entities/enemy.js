@@ -25,7 +25,7 @@ game.module('game.entities.enemy')
 		},
 
 		update: function() {
-			this.position.y += 1;
+			this.position.y += 100 * game.system.delta;
 			this.position.x = this.centerx + this.A*Math.sin(this.position.y/this.F);
 			this.sprite.position.set(this.position.x, this.position.y);
 			this.body.position.x = this.position.x;
@@ -38,6 +38,7 @@ game.module('game.entities.enemy')
 
 		collide: function(body) {
 			if (body.collisionGroup == BODY_TYPE.BULLET_FRIEND) {
+				body.entity.remove();
 				this.explode();
 				this.remove();
 			}
@@ -61,6 +62,10 @@ game.module('game.entities.enemy')
 			emitter.angleVar = 3;
 			emitter.speed = 0;
 			game.scene.addEmitter(emitter);
+
+			if (Math.random() <= 0.25) {
+				game.scene.level.addPickup(new game.Pickup(this.position.x, this.position.y, PICKUP_TYPE.BOMB));
+			}
 		},
 
 		remove: function() {
